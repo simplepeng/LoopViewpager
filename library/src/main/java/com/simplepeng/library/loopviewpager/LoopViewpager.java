@@ -1,4 +1,4 @@
-package com.simplepeng.library;
+package com.simplepeng.library.loopviewpager;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -55,16 +55,16 @@ public class LoopViewpager extends ViewPager {
         @Override
         public void onPageSelected(int position) {
             int realPosition = position;
-//            if (mOutOnPageChangeListener != null) {
-//                int count = LoopViewpager.this.getAdapter().getCount();
-//                int currentPosition = LoopViewpager.this.getCurrentItem();
-//                if (currentPosition == 0) {
-//                    realPosition = count - 2;
-//                } else if (currentPosition == count - 1) {
-//                    realPosition = 1;
-//                }
-//                mOutOnPageChangeListener.onPageSelected(realPosition);
-//            }
+            if (mOutOnPageChangeListener != null) {
+                int count = LoopViewpager.this.getAdapter().getCount();
+                int currentPosition = LoopViewpager.this.getCurrentItem();
+                if (currentPosition == 0) {
+                    realPosition = count - 2;
+                } else if (currentPosition == count - 1) {
+                    realPosition = 1;
+                }
+                mOutOnPageChangeListener.onPageSelected(realPosition - 1);
+            }
         }
 
         @Override

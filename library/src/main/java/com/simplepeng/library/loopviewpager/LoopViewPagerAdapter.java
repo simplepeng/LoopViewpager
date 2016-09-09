@@ -1,4 +1,4 @@
-package com.simplepeng.library;
+package com.simplepeng.library.loopviewpager;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -72,6 +72,10 @@ public class LoopViewPagerAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         return mViews.size();
+    }
+
+    public int getRealCount(){
+        return mViews.size() -2;
     }
 
     @Override
