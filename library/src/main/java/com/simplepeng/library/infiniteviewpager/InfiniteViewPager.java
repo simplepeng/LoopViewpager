@@ -1,76 +1,68 @@
 package com.simplepeng.library.infiniteviewpager;
 
-
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
+
+import com.simplepeng.library.base.BaseViewPager;
 
 /**
- * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around effect. Should be used with an {@link
- * InfinitePagerAdapter}.
+ * 无限的viewpager
  */
-public class InfiniteViewPager extends ViewPager {
+public class InfiniteViewPager extends BaseViewPager {
+
+    public OnPageChangeListener mOutOnPageChangeListener;
+    private int realCount;
 
     public InfiniteViewPager(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public InfiniteViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        super.setOnPageChangeListener(mOnPagerChangeListener);
     }
 
     @Override
     public void setAdapter(PagerAdapter adapter) {
         super.setAdapter(adapter);
-        // offset first element so that we can scroll to the left
-        setCurrentItem(0);
+        if (adapter instanceof InfiniteViewPagerAdapter) {
+            realCount = ((InfiniteViewPagerAdapter) adapter).getRealCount();
+            setCurrentItem(Integer.MAX_VALUE / 2);
+        }
     }
 
     @Override
-    public void setCurrentItem(int item) {
-        // offset the current item to ensure there is space to scroll
-        setCurrentItem(item, false);
+    public void setOnPageChangeListener(OnPageChangeListener listener) {
+        mOutOnPageChangeListener = listener;
     }
 
-    @Override
-    public void setCurrentItem(int item, boolean smoothScroll) {
-        if (getAdapter().getCount() == 0) {
-            super.setCurrentItem(item, smoothScroll);
-            return;
+    private OnPageChangeListener mOnPagerChangeListener = new OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset
+                , int positionOffsetPixels) {
+            if (mOutOnPageChangeListener != null) {
+                mOutOnPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
         }
-        item = getOffsetAmount() + (item % getAdapter().getCount());
-        super.setCurrentItem(item, smoothScroll);
-    }
 
-    @Override
-    public int getCurrentItem() {
-        if (getAdapter().getCount() == 0) {
-            return super.getCurrentItem();
+        @Override
+        public void onPageSelected(int position) {
+            int realPosition = position % realCount;
+            Log.e("simple", realPosition + "=====realPosition");
+            if (mOutOnPageChangeListener != null) {
+                mOutOnPageChangeListener.onPageSelected(realPosition);
+            }
         }
-        int position = super.getCurrentItem();
-        if (getAdapter() instanceof InfinitePagerAdapter) {
-            InfinitePagerAdapter infAdapter = (InfinitePagerAdapter) getAdapter();
-            // Return the actual item position in the data backing InfinitePagerAdapter
-            return (position % infAdapter.getRealCount());
-        } else {
-            return super.getCurrentItem();
-        }
-    }
 
-    private int getOffsetAmount() {
-        if (getAdapter().getCount() == 0) {
-            return 0;
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            if (mOutOnPageChangeListener != null) {
+                mOutOnPageChangeListener.onPageScrollStateChanged(state);
+            }
         }
-        if (getAdapter() instanceof InfinitePagerAdapter) {
-            InfinitePagerAdapter infAdapter = (InfinitePagerAdapter) getAdapter();
-            // allow for 100 back cycles from the beginning
-            // should be enough to create an illusion of infinity
-            // warning: scrolling to very high values (1,000,000+) results in
-            // strange drawing behaviour
-            return infAdapter.getRealCount() * 100;
-        } else {
-            return 0;
-        }
-    }
+    };
+
+
 }

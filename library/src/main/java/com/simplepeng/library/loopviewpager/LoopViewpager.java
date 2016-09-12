@@ -4,12 +4,13 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
+
+import com.simplepeng.library.base.BaseViewPager;
 
 /**
- *
+ * 循环的viewpager
  */
-public class LoopViewpager extends ViewPager {
+public class LoopViewpager extends BaseViewPager {
 
     private static final String TAG = "LoopViewpager";
 
@@ -21,22 +22,16 @@ public class LoopViewpager extends ViewPager {
 
     public LoopViewpager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
-    }
-
-    @Override
-    public void setOnPageChangeListener(OnPageChangeListener listener) {
-//        super.setOnPageChangeListener(listener);
-        mOutOnPageChangeListener = listener;
-    }
-
-    private void init() {
         super.setOnPageChangeListener(mOnPagerChangeListener);
     }
 
     @Override
+    public void setOnPageChangeListener(OnPageChangeListener listener) {
+        mOutOnPageChangeListener = listener;
+    }
+
+    @Override
     public void setAdapter(PagerAdapter adapter) {
-        Log.d(TAG, "count" + adapter.getCount());
         super.setAdapter(adapter);
         setCurrentItem(1, false);
     }
@@ -45,8 +40,6 @@ public class LoopViewpager extends ViewPager {
         @Override
         public void onPageScrolled(int position, float positionOffset
                 , int positionOffsetPixels) {
-//            Log.e("simple", "positionOffset==" + positionOffset);
-//            Log.e("simple", "positionOffsetPixels==" + positionOffsetPixels);
             if (mOutOnPageChangeListener != null) {
                 mOutOnPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }

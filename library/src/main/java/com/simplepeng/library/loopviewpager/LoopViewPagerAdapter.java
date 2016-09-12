@@ -1,13 +1,10 @@
 package com.simplepeng.library.loopviewpager;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.simplepeng.library.base.BasePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,67 +12,40 @@ import java.util.List;
 /**
  *
  */
-public class LoopViewPagerAdapter extends PagerAdapter {
+public class LoopViewPagerAdapter extends BasePagerAdapter {
 
     private static final String TAG = "LoopViewPagerAdapter";
 
-    private Context mContext;
-    private List<View> mViews = new ArrayList<>();
-
-    public LoopViewPagerAdapter(Context context) {
-        this.mContext = context;
-    }
-
-    public void setDataFromUrl(String... imgUrls) {
-        if (imgUrls == null || imgUrls.length == 0) {
-            throw new NullPointerException("imgUrls must be not null and not empty");
-        }
+    public LoopViewPagerAdapter(Context context, String... imgUrls) {
+        super(context, imgUrls);
         List<String> imgUrlList = new ArrayList<>();
         for (String imgUrl : imgUrls) {
             imgUrlList.add(imgUrl);
         }
-        setDataFromUrl(imgUrlList);
+        addViews(addFirstAndEnd(imgUrlList));
     }
 
-    public void setDataFromUrl(List<String> imgUrlList) {
-        if (imgUrlList == null || imgUrlList.isEmpty()) {
-            throw new NullPointerException("imgUrls must be not null and not empty");
-        }
+    public LoopViewPagerAdapter(Context context, List<String> imgUrlList) {
+        super(context, imgUrlList);
+        addViews(addFirstAndEnd(imgUrlList));
+    }
+
+    public List<String> addFirstAndEnd(List<String> imgUrlList) {
         String firstUrl = imgUrlList.get(0);
         String lastUrl = imgUrlList.get(imgUrlList.size() - 1);
         imgUrlList.add(0, lastUrl);
         imgUrlList.add(firstUrl);
-        for (String imgUrl : imgUrlList) {
-            ImageView imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Picasso.with(mContext)
-                    .load(imgUrl)
-                    .into(imageView);
-            mViews.add(imageView);
-        }
+        return imgUrlList;
     }
-
-//    public void setDataFromView(List<View> views) {
-//        if (views == null || views.isEmpty()) {
-//            throw new NullPointerException("views must be not null and not empty");
-//        }
-//        ImageView firstImageView = (ImageView) views.get(0);
-//        ImageView lastImageView = (ImageView) views.get(views.size() - 1);
-//        ImageView firstView = new ImageView(mContext);
-//        ImageView lastView = new ImageView(mContext);
-//        lastView.setImageDrawable(firstImageView.getDrawable());
-//        firstView.setImageDrawable(lastImageView.getDrawable());
-//        mViews.add(0, lastImageView);
-//        mViews.add(firstImageView);
-//    }
 
     @Override
     public int getCount() {
         return mViews.size();
     }
 
-    public int getRealCount(){
-        return mViews.size() -2;
+    @Override
+    public int getRealCount() {
+        return mViews.size() - 2;
     }
 
     @Override
@@ -86,8 +56,6 @@ public class LoopViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Log.d(TAG, "instantiateItem==" + (position + 1));
-//        position = position >= mViews.size() ? position - mViews.size() : position;
         View view = mViews.get(position);
         container.addView(view);
         return view;
@@ -95,10 +63,9 @@ public class LoopViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        Log.d(TAG, "destroyItem==" + (position + 1));
         container.removeView((View) object);
-//        position = position >= mViews.size() ? position - mViews.size() : position;
-//        container.removeView(mViews.get(position));
     }
+
+
 }
 

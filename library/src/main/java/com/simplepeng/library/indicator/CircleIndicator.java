@@ -3,16 +3,15 @@ package com.simplepeng.library.indicator;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.simplepeng.library.loopviewpager.LoopViewPagerAdapter;
-import com.simplepeng.library.loopviewpager.LoopViewpager;
 import com.simplepeng.library.R;
+import com.simplepeng.library.base.BasePagerAdapter;
+import com.simplepeng.library.base.BaseViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
 
     private final String TAG = "CircleIndicator";
     private List<View> rbList = new ArrayList<>();
-    private LoopViewpager mViewPager;
+    private BaseViewPager mViewPager;
     private ViewPager.OnPageChangeListener mOnPageChangeListener;
     int margin = (int) getResources().getDimension(R.dimen.indicator_margin);
 
@@ -52,9 +51,9 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
         if (viewPager.getAdapter() == null) {
             throw new NullPointerException("adapter of view must be not null");
         }
-        if (viewPager instanceof LoopViewpager) {
-            mViewPager = (LoopViewpager) viewPager;
-            count = ((LoopViewPagerAdapter) mViewPager.getAdapter()).getRealCount();
+        if (viewPager instanceof BaseViewPager) {
+            mViewPager = (BaseViewPager) viewPager;
+            count = ((BasePagerAdapter) mViewPager.getAdapter()).getRealCount();
         }
 
         if (count == 0) {
@@ -74,7 +73,6 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
             rbList.add(i, iv);
             this.addView(iv, i);
         }
-//        requestLayout();
         rbList.get(0).setSelected(true);
         mViewPager.setOnPageChangeListener(this);
     }
@@ -90,7 +88,6 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
 
     @Override
     public void onPageSelected(int position) {
-        Log.e(TAG, "onPageSelected: " + position);
         if (curPosition == position) {
             return;
         }

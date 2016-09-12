@@ -13,13 +13,13 @@
         >
 
         <com.simplepeng.library.loopviewpager.LoopViewpager
-            android:id="@+id/viewPager"
+            android:id="@+id/loopViewPager"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             />
 
         <com.simplepeng.library.indicator.CircleIndicator
-            android:id="@+id/indicator"
+            android:id="@+id/loopViewPagerIndicator"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_alignParentBottom="true"
@@ -44,13 +44,24 @@
         android:layout_marginTop="20dp"
         >
 
-        <android.support.v4.view.ViewPager
+        <com.simplepeng.library.infiniteviewpager.InfiniteViewPager
             android:id="@+id/infiniteViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
 
-        </android.support.v4.view.ViewPager>
+        </com.simplepeng.library.infiniteviewpager.InfiniteViewPager>
+
+        <com.simplepeng.library.indicator.CircleIndicator
+            android:id="@+id/infiniteViewPagerIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="#22000000"
+            >
+
+        </com.simplepeng.library.indicator.CircleIndicator>
 
         <TextView
             android:layout_width="wrap_content"
