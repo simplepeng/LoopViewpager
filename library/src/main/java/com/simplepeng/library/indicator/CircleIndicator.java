@@ -11,20 +11,19 @@ import android.widget.LinearLayout;
 
 import com.simplepeng.library.R;
 import com.simplepeng.library.base.BasePagerAdapter;
-import com.simplepeng.library.base.BaseViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- *
+ * 圆形指示器
  */
 public class CircleIndicator extends LinearLayout implements ViewPager.OnPageChangeListener {
 
     private final String TAG = "CircleIndicator";
     private List<View> rbList = new ArrayList<>();
-    private BaseViewPager mViewPager;
+    private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mOnPageChangeListener;
     int margin = (int) getResources().getDimension(R.dimen.indicator_margin);
 
@@ -51,8 +50,8 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
         if (viewPager.getAdapter() == null) {
             throw new NullPointerException("adapter of view must be not null");
         }
-        if (viewPager instanceof BaseViewPager) {
-            mViewPager = (BaseViewPager) viewPager;
+        if (viewPager instanceof ViewPager) {
+            mViewPager = (ViewPager) viewPager;
             count = ((BasePagerAdapter) mViewPager.getAdapter()).getRealCount();
         }
 

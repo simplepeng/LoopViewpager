@@ -5,12 +5,10 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
-import com.simplepeng.library.base.BaseViewPager;
-
 /**
  * 循环的viewpager
  */
-public class LoopViewpager extends BaseViewPager {
+public class LoopViewpager extends ViewPager {
 
     private static final String TAG = "LoopViewpager";
 

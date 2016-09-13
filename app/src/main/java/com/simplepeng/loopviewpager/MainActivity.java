@@ -18,11 +18,9 @@ public class MainActivity extends AppCompatActivity {
     private CircleIndicator infiniteViewPagerIndicator;
 
     private String[] imgUrls = {
-//            "https://avatars1.githubusercontent.com/u/12198830?v=3&s=460",
             "https://avatars0.githubusercontent.com/u/66577?v=3&s=460",
             "https://avatars3.githubusercontent.com/u/2503423?v=3&s=460",
             "https://avatars1.githubusercontent.com/u/12198830?v=3&s=460",
-//            "https://avatars0.githubusercontent.com/u/66577?v=3&s=460"
     };
 
     @Override
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         LoopViewPagerAdapter adapter = new LoopViewPagerAdapter(this, imgUrls);
         loopViewPager.setAdapter(adapter);
         loopViewPagerIndicator.setViewPager(loopViewPager);
-//
+
         infiniteViewPager = (InfiniteViewPager) findViewById(R.id.infiniteViewPager);
         infiniteViewPagerIndicator =
                 (CircleIndicator) findViewById(R.id.infiniteViewPagerIndicator);

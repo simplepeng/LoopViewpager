@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.simplepeng.library.base.BasePagerAdapter;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,12 +16,7 @@ import java.util.List;
 public class InfiniteViewPagerAdapter extends BasePagerAdapter {
 
     public InfiniteViewPagerAdapter(Context context, String... imgUrls) {
-        super(context, imgUrls);
-        List<String> imgUrlList = new ArrayList<>();
-        for (String imgUrl : imgUrls) {
-            imgUrlList.add(imgUrl);
-        }
-        addViews(imgUrlList);
+        this(context, Arrays.asList(imgUrls));
     }
 
     public InfiniteViewPagerAdapter(Context context, List<String> imgUrlList) {

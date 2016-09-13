@@ -2,15 +2,14 @@ package com.simplepeng.library.infiniteviewpager;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
-
-import com.simplepeng.library.base.BaseViewPager;
 
 /**
  * 无限的viewpager
  */
-public class InfiniteViewPager extends BaseViewPager {
+public class InfiniteViewPager extends ViewPager {
 
     public OnPageChangeListener mOutOnPageChangeListener;
     private int realCount;
